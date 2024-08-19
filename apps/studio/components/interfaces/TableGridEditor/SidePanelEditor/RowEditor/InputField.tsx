@@ -113,15 +113,36 @@ const InputField = ({
         error={errors[field.name]}
         onChange={(event: any) => onUpdateField({ [field.name]: event.target.value })}
         actions={
-          <Button
-            type="default"
-            className="mr-1"
-            htmlType="button"
-            onClick={onSelectForeignKey}
-            icon={<Link />}
-          >
-            Select record
-          </Button>
+          <>
+            <Button
+              type="default"
+              className="mr-1"
+              htmlType="button"
+              onClick={onSelectForeignKey}
+              icon={<Link />}
+            >
+            
+              Select record
+            </Button>
+              {field.isNullable && (
+              <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button type="default" icon={<Edit />} className="px-1.5" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-40">
+                    <DropdownMenuItem onClick={() => onUpdateField({ [field.name]: null })}>
+                      Set to NULL
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => onEditText({ column: field.name, value: field.value })}
+                    >
+                      Expand editor
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+              </DropdownMenu>
+            )}
+            
+          </>
         }
       />
     )
